@@ -1,7 +1,7 @@
 module "cost_mgmt_notif" {
   source = "../../../terraform-aws-cost-budget"
 
-  aws_env              = "dev"
+  environment          = "dev"
   currency             = "USD"
   limit_amount         = 50
   time_unit            = "DAILY"
@@ -12,6 +12,7 @@ module "cost_mgmt_notif" {
 }
 
 output "sns_topic" {
+  description = "List of SNS Topic ARN sto be subscribed to in order to delivery the budget billing notifications"
   value = module.cost_mgmt_notif.sns_topic_arn
 }
 

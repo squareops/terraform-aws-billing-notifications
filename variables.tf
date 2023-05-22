@@ -1,7 +1,7 @@
 #=============================#
 # BUDGET                      #
 #=============================#
-variable "aws_env" {
+variable "environment" {
   description = "AWS environment you are deploying to. It will be appended to SNS topic and alarm name. (e.g. dev, stage, prod)"
 }
 

@@ -1,10 +1,6 @@
-#
-# case 5 & 6 & 7 & 8
-# if(var.aws_sns_topic_arn == "")
-#
 resource "aws_sns_topic" "sns_alert_topic" {
   count = var.create_sns_topic ? 1 : 0
-  name  = "budget-billing-alarm-notification-${lower(var.currency)}-${var.aws_env}"
+  name  = "budget-billing-alarm-notification-${lower(var.currency)}-${var.environment}"
   tags  = var.tags
 }
 

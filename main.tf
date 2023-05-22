@@ -2,7 +2,7 @@ locals {
 
   budget = {
 
-    name              = var.cost_filters_service == null ? "budget-${var.time_unit}-${var.aws_env}" : "budget-${var.cost_filters_service}-${var.time_unit}-${var.aws_env}"
+    name              = var.cost_filters_service == null ? "budget-${var.time_unit}-${var.environment}" : "budget-${var.cost_filters_service}-${var.time_unit}-${var.environment}"
     budget_type       = "COST"
     limit_amount      = var.limit_amount
     limit_unit        = var.currency

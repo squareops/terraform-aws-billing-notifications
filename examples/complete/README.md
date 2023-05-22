@@ -1,5 +1,4 @@
 # AWS Budget Forecast Notification
-## 5_budget-notif-to-new-sns-specific-service-with-time-end
 
 Configuration in this directory creates set of AWS resources which may be sufficient for a fully working stage or prod
 Terraform module - creates an AWS Budget with notification via SNS enabled with optional sns topic
@@ -54,22 +53,3 @@ No provider.
 | sns\_topic | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
-## 5_budget-notif-to-new-sns-specific-service-with-time-end
-```terraform
-module "cost_mgmt_notif" {
-  source = "../../../terraform-aws-cost-budget"
-
-  aws_env              = var.aws_profile
-  currency             = "USD"
-  limit_amount         = 500
-  time_unit            = "MONTHLY"
-  time_period_start    = "2019-01-01_00:00"
-  time_period_end      = "2019-12-31_23:59"
-  cost_filters_service = "Amazon Elastic Compute Cloud - Compute"
-}
-
-output "sns_topic" {
-  value = module.cost_mgmt_notif.sns_topic_arn
-}
-```
