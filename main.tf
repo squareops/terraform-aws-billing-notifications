@@ -2,7 +2,7 @@ locals {
 
   budget = {
 
-    name              = var.cost_filters_service == null ? "budget-${var.time_unit}-${var.environment}" : "budget-${var.cost_filters_service}-${var.time_unit}-${var.environment}"
+    name              = var.cost_filter == null ? "budget-${var.time_unit}-${var.environment}" : "budget-${var.cost_filter}-${var.time_unit}-${var.environment}"
     budget_type       = "COST"
     limit_amount      = var.limit_amount
     limit_unit        = var.currency
@@ -74,7 +74,7 @@ resource "aws_budgets_budget" "budget_notifification" {
   
 
   cost_filters = {
-    Service = var.cost_filters_service
+    Service = var.cost_filter
   }
 
   notification {
@@ -100,3 +100,8 @@ resource "aws_budgets_budget" "budget_notifification" {
   }
 }
 
+resource "aws_sns_topic_subscription" "slack_subscription" {
+  topic_arn = aws_sns_topic.sns_alert_topic[0].arn
+  protocol  = "https"
+  endpoint  = var.endpoint
+}
