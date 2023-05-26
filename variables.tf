@@ -33,7 +33,7 @@ variable "time_period_end" {
   default     = null
 }
 
-variable "cost_filters_service" {
+variable "cost_filter" {
   description = "Budget service cost filter, eg: Amazon Elastic Compute Cloud - Compute / Amazon Relational Database Service / Amazon Redshift / Amazon ElastiCache/ Amazon Elasticsearch Service"
   type        = string
   default     = null
@@ -130,6 +130,16 @@ variable "aws_sns_account_id" {
   description = "The AWS Account ID which will host the SNS topic as owner"
   type        = string
   default     = null
+}
+
+#=============================#
+# Slack Notify                #
+#=============================#
+
+variable "endpoint" {
+  description = "Provide the webhook url of slack channel"
+  type        = string
+  default     = ""
 }
 
 #=============================#
