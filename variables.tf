@@ -1,152 +1,139 @@
-#=============================#
-# BUDGET                      #
-#=============================#
-variable "environment" {
-  description = "AWS environment you are deploying to. It will be appended to SNS topic and alarm name. (e.g. dev, stage, prod)"
-}
-
-variable "limit_amount" {
-  description = "The amount of cost or usage being measured for a budget."
-  type        = string
-}
-
-variable "currency" {
-  description = "The unit of measurement used for the budget forecast, actual spend, or budget threshold, such as dollars. Currently COST budget_type is the only supported."
-  type        = string
-  default     = "USD"
-}
-
-variable "time_unit" {
-  description = "The length of time until a budget resets the actual and forecasted spend. Valid values: MONTHLY, QUARTERLY, ANNUALLY."
-  type        = string
-  default     = "MONTHLY"
-}
-
-variable "time_period_start" {
-  description = "Time to start"
-  type        = string
-}
-
-variable "time_period_end" {
-  description = "Time to end"
-  type        = string
-  default     = null
-}
-
-variable "cost_filter" {
-  description = "Budget service cost filter, eg: Amazon Elastic Compute Cloud - Compute / Amazon Relational Database Service / Amazon Redshift / Amazon ElastiCache/ Amazon Elasticsearch Service"
-  type        = string
-  default     = null
-}
-
-variable "notification_threshold" {
-  description = "% Threshold when the notification should be sent."
-  type        = string
-  default     = "100"
-}
-
-variable "cost_type_include_credit" {
-  description = "A boolean value whether to include credits in the cost budget."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_include_discount" {
-  description = "Specifies whether a budget includes discounts."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_include_other_subscription" {
-  description = "A boolean value whether to include other subscription costs in the cost budget."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_include_recurring" {
-  description = "A boolean value whether to include recurring costs in the cost budget."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_include_refund" {
-  description = "A boolean value whether to include refunds in the cost budget."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_include_subscription" {
-  description = "A boolean value whether to include subscriptions in the cost budget."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_include_support" {
-  description = "A boolean value whether to include support costs in the cost budget."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_include_tax" {
-  description = "A boolean value whether to include support costs in the cost budget."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_include_upfront" {
-  description = "A boolean value whether to include support costs in the cost budget."
-  type        = bool
-  default     = true
-}
-
-variable "cost_type_use_amortized" {
-  description = "Specifies whether a budget uses the amortized rate."
+variable "slack_notification_enabled" {
+  description = "Flag to enable or disable Slack notifications."
   type        = bool
   default     = false
 }
 
-variable "cost_type_use_blended" {
-  description = "A boolean value whether to use blended costs in the cost budget."
-  type        = bool
-  default     = false
-}
-
-#=============================#
-# SNS                         #
-#=============================#
-variable "create_sns_topic" {
-  description = "Creates a SNS Topic if `true`."
-  type        = bool
-  default     = true
-}
-
-variable "sns_topic_arns" {
-  description = "List of SNS topic ARNs to be used. If `create_sns_topic` is `true`, it merges the created SNS Topic by this module with this list of ARNs"
-  type        = list(string)
-  default     = []
-}
-
-variable "aws_sns_account_id" {
-  description = "The AWS Account ID which will host the SNS topic as owner"
-  type        = string
-  default     = null
-}
-
-#=============================#
-# Slack Notify                #
-#=============================#
-
-variable "endpoint" {
-  description = "Provide the webhook url of slack channel"
+variable "slack_channel_id" {
+  description = "The ID of the Slack channel for notifications."
   type        = string
   default     = ""
 }
 
-#=============================#
-# TAGS                        #
-#=============================#
-variable "tags" {
-  type        = map(string)
-  description = "A mapping of tags to assign to all resources"
-  default     = {}
+variable "slack_workspace_id" {
+  description = "The ID of the Slack workspace for notifications."
+  type        = string
+  default     = ""
 }
+
+variable "notification" {
+  description = "Configuration for budget notifications."
+  type = object({
+    comparison_operator = optional(string, "GREATER_THAN") # LESS_THAN, EQUAL_TO or GREATER_THAN
+    threshold           = number
+    threshold_type      = string                     # PERCENTAGE or ABSOLUTE_VALUE
+    notification_type   = optional(string, "ACTUAL") # ACTUAL or FORECASTED
+  })
+}
+
+variable "cost_types" {
+  description = "Configuration for included cost types in the budget."
+  default = {
+    include_credit             = false
+    include_discount           = true
+    include_other_subscription = true
+    include_recurring          = true
+    include_refund             = false
+    include_subscription       = true
+    include_support            = true
+    include_tax                = true
+    include_upfront            = true
+    use_blended                = false
+  }
+  type = any
+}
+
+variable "time_period_start" {
+  description = "The start date of the budget time period(e.g., 2017-01-01_12:00)."
+  type        = string
+  default     = ""
+}
+
+variable "time_period_end" {
+  description = "The start date of the budget time period(e.g., 2017-01-01_12:00)."
+  type        = string
+  default     = ""
+}
+
+variable "time_unit" {
+  description = "The unit of time for the budget (e.g., MONTHLY, QUARTERLY, ANNUALLY and DAILY)."
+  type        = string
+  default     = ""
+}
+
+variable "name" {
+  description = "A unique name for the budget configuration."
+  type        = string
+  default     = ""
+}
+
+variable "environment" {
+  description = "The environment for which the budget is configured."
+  type        = string
+  default     = ""
+}
+
+variable "account_id" {
+  description = "The AWS account ID for which the budget is created."
+  type        = string
+  default     = ""
+}
+
+variable "budget_type" {
+  description = "The type of budget (e.g., COST, USAGE) for monitoring."
+  type        = string
+  default     = ""
+}
+
+variable "limit_amount" {
+  description = "The budgeted amount for the specified time period."
+  type        = number
+}
+
+variable "limit_unit" {
+  description = "The unit of measurement for the budgeted amount(e.g,, USD, GB)."
+  type        = string
+  default     = ""
+}
+
+variable "email_notification_enabled" {
+  description = "Flag to enable or disable Slack notifications."
+  type        = bool
+  default     = false
+}
+
+variable "email_address" {
+  type    = string
+  default = ""
+}
+
+#=================
+# variable "email_address" {
+#   type = string
+#   default = "rohit.kumar@squareops.com"
+# }
+
+# variable "slack_channel_id" {
+#   type = string
+#   default = "C0638MUDWUD"
+# }
+
+# variable "slack_workspace_id" {
+#   type = string
+#   default = "TB5FXBSUE"
+# }
+
+# variable "aws_account_id" {
+#   type = string
+#   default = "271251951598"
+# }
+
+# variable "threshold" {
+#   type = string
+#   default = "100"
+# }
+
+# variable "limit_amount" {
+#   type = string
+#   default = "10"
+# }
