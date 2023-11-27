@@ -19,10 +19,10 @@ variable "slack_workspace_id" {
 variable "notification" {
   description = "Configuration for budget notifications."
   type = object({
-    comparison_operator        = optional(string,"GREATER_THAN") # LESS_THAN, EQUAL_TO or GREATER_THAN
-    threshold                  = number
-    threshold_type             = string # PERCENTAGE or ABSOLUTE_VALUE
-    notification_type          = optional(string,"ACTUAL") # ACTUAL or FORECASTED
+    comparison_operator = optional(string, "GREATER_THAN") # LESS_THAN, EQUAL_TO or GREATER_THAN
+    threshold           = number
+    threshold_type      = string                     # PERCENTAGE or ABSOLUTE_VALUE
+    notification_type   = optional(string, "ACTUAL") # ACTUAL or FORECASTED
   })
 }
 
@@ -103,7 +103,7 @@ variable "email_notification_enabled" {
 }
 
 variable "email_address" {
-  type = string
+  type    = string
   default = ""
 }
 

@@ -60,7 +60,7 @@ resource "aws_iam_role_policy_attachment" "chatbot_policy_attach" {
 
 resource "awscc_chatbot_slack_channel_configuration" "aws_budget_alerts_slack" {
   count              = var.slack_notification_enabled ? 1 : 0
-  configuration_name = format("%s-%s-%s-cost",var.environment,var.name,var.time_unit)
+  configuration_name = format("%s-%s-%s-cost", var.environment, var.name, var.time_unit)
   iam_role_arn       = aws_iam_role.chatbot_role.arn
   slack_channel_id   = var.slack_channel_id
   slack_workspace_id = var.slack_workspace_id

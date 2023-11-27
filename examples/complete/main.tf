@@ -3,7 +3,7 @@ locals {
   region      = "us-east-2"
   environment = "prod"
   name        = "skaf"
-  account_id  = "271251951598"
+  account_id  = "222222222222"
   additional_tags = {
     Owner      = "SquareOps"
     Expires    = "Never"
@@ -13,20 +13,20 @@ locals {
 }
 
 module "aws_budget_alert" {
-  source = "../../"
-  name   = local.name
-  environment = local.environment
-  account_id  = local.account_id
-  budget_type = "COST"
-  limit_amount= "10"
-  limit_unit  = "USD"
+  source            = "git@github.com:sq-ia/terraform-aws-billing.git"
+  name              = local.name
+  environment       = local.environment
+  account_id        = local.account_id
+  budget_type       = "COST"
+  limit_amount      = "10"
+  limit_unit        = "USD"
   time_period_start = "2023-11-16_00:00"
-  time_unit   = "DAILY"
+  time_unit         = "DAILY"
   notification = {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 100
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
+    comparison_operator = "GREATER_THAN"
+    threshold           = 100
+    threshold_type      = "PERCENTAGE"
+    notification_type   = "ACTUAL"
   }
   cost_types = {
     include_credit             = false
@@ -41,10 +41,8 @@ module "aws_budget_alert" {
     use_blended                = false
   }
   slack_notification_enabled = true
-  slack_channel_id   = "C0638MUDWUD"
-  slack_workspace_id = "TB5FXBSUE"
-  email_notification_enabled = false
-  email_address = ""
+  slack_channel_id           = "XXXXXZZZZ"
+  slack_workspace_id         = "ABCDUTSSZ"
+  email_notification_enabled = true
+  email_address              = "notification.com"
 }
-
-

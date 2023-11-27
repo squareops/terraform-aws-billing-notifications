@@ -12,4 +12,3 @@ output "chatbot_role_arn" {
   description = "The ARN of the AWS IAM role created for the chatbot to assume."
   value       = aws_iam_role.chatbot_role.arn
 }
-
