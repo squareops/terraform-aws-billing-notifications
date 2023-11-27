@@ -1,4 +1,6 @@
 provider "aws" {
-  region = "us-east-2"
-  # profile = var.aws_profile
+  region = local.region
+  default_tags {
+    tags = local.additional_tags
+  }
 }
