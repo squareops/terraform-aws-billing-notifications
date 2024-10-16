@@ -15,10 +15,10 @@ Please check the **input parameters** for a better understanding of it.
 ## Usage Example
 ```hcl
 module "aws_budget_alert" {
-  source            = "git@github.com:sq-ia/terraform-aws-billing.git"
-  name              = "daily-alert"
-  environment       = "prod"
-  account_id        = "222222222222"
+  source            = "git@github.com:squareops/terraform-aws-billing.git"
+  name              = local.name
+  environment       = local.environment
+  account_id        = local.account_id
   budget_type       = "COST"
   limit_amount      = "10"
   limit_unit        = "USD"
@@ -31,16 +31,16 @@ module "aws_budget_alert" {
     notification_type   = "ACTUAL"
   }
   cost_types = {
-    include_credit             = true
+    include_credit             = false
     include_discount           = true
     include_other_subscription = true
     include_recurring          = true
-    include_refund             = true
+    include_refund             = false
     include_subscription       = true
     include_support            = true
     include_tax                = true
     include_upfront            = true
-    use_blended                = true
+    use_blended                = false
   }
   slack_notification_enabled = true
   slack_channel_id           = "XXXXXZZZZ"
