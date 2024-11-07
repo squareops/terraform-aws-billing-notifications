@@ -44,7 +44,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_budget_alert"></a> [aws\_budget\_alert](#module\_aws\_budget\_alert) | git@github.com:squareops/terraform-aws-billing.git | n/a |
+| <a name="module_aws_budget_alert"></a> [aws\_budget\_alert](#module\_aws\_budget\_alert) | squareops/billing-notifications | n/a |
 
 ## Resources
 

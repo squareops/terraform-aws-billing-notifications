@@ -12,7 +12,8 @@ locals {
 }
 
 module "aws_budget_alert" {
-  source            = "../../"
+  source            = "squareops/billing-notifications/aws"
+  version           = "1.0.1" 
   name              = local.name
   environment       = local.environment
   account_id        = local.account_id

@@ -15,7 +15,8 @@ Please check the **input parameters** for a better understanding of it.
 ## Usage Example
 ```hcl
 module "aws_budget_alert" {
-  source            = "git@github.com:squareops/terraform-aws-billing.git"
+  source            = "squareops/billing-notifications/aws"
+  version           = "1.0.1"
   name              = local.name
   environment       = local.environment
   account_id        = local.account_id
