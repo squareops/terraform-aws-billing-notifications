@@ -1,19 +1,19 @@
-
 locals {
-  region      = "us-east-2"
-  environment = "prod"
+  region      = ""
+  environment = ""
   name        = "skaf"
-  account_id  = "222222222222"
+  account_id  = ""
   additional_tags = {
     Owner      = "SquareOps"
     Expires    = "Never"
     Department = "Engineering"
-    Product    = "Atmosly"
+    Product    = ""
   }
 }
 
 module "aws_budget_alert" {
-  source            = "git@github.com:sq-ia/terraform-aws-billing.git"
+  source            = "squareops/billing-notifications/aws"
+  version           = "1.0.1" 
   name              = local.name
   environment       = local.environment
   account_id        = local.account_id
